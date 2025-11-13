@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -95,20 +96,38 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
   const memberDetails = { name: 'New Member', gymNo: '00000' };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-background-dark py-6 px-4">
+    <div className="min-h-screen bg-background-dark pb-10 px-4">
       <div className="max-w-xl mx-auto">
+        
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Register New Member
-          </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Fill in the details to add a new gym member
-          </p>
-        </div>
+<div className="pt-4 pb-5 sticky top-0 bg-background-dark z-30 border-b border-white/10 backdrop-blur-md">
+  {/* Logo + Name */}
+  <div className="flex items-center justify-center gap-2 mb-2">
+    <Image
+      src="/icon-192.png"
+      alt="Kurl Club Logo"
+      width={42}
+      height={42}
+      className="shadow-md rounded-lg"
+    />
+    <h1 className="text-2xl font-bold text-white tracking-tight">
+      Gymnazo
+    </h1>
+  </div>
+
+  {/* Greeting */}
+<p className="text-gray-400 text-[14px] text-center mb-2">
+  💫 Every great transformation begins with one step. Let’s get started! ❤️
+</p>
+
+  {/* Section Title */}
+<h2 className="text-[19px] font-semibold text-gray-100 text-center">
+  Fill in your details below to join
+</h2>
+</div>
 
         {/* Form Card */}
-        <div className="bg-white dark:bg-secondary-blue-700 rounded-lg shadow-sm p-6">
+        <div className="bg-white dark:bg-secondary-blue-700 rounded-lg mt-2 shadow-sm p-6 ">
           <FormProvider {...form}>
             <form
               id="add-member-form"
@@ -116,20 +135,20 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
               onSubmit={form.handleSubmit(handleSubmit)}
             >
               <div className="items-start gap-2 mb-6 flex justify-between">
-            <KFormField
-              fieldType={KFormFieldType.SKELETON}
-              control={form.control}
-              name="profilePicture"
-              renderSkeleton={(field) => (
-                <FormControl>
-                  <ProfilePictureUploader
-                    files={field.value as File | null}
-                    onChange={(file) => field.onChange(file)}
-                  />
-                </FormControl>
-              )}
-            />
-                       <Badge className="bg-secondary-blue-400 flex items-center w-fit justify-center text-sm text-white rounded-full h-[30px] py-2 px-2 border border-secondary-blue-300 bg-opacity-100">
+                <KFormField
+                  fieldType={KFormFieldType.SKELETON}
+                  control={form.control}
+                  name="profilePicture"
+                  renderSkeleton={(field) => (
+                    <FormControl>
+                      <ProfilePictureUploader
+                        files={field.value as File | null}
+                        onChange={(file) => field.onChange(file)}
+                      />
+                    </FormControl>
+                  )}
+                />
+                <Badge className="bg-secondary-blue-400 flex items-center w-fit justify-center text-sm text-white rounded-full h-[30px] py-2 px-2 border border-secondary-blue-300 bg-opacity-100">
                   Gym no: #{memberDetails.gymNo}
                 </Badge>
               </div>
@@ -220,19 +239,19 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                     options={feeStatusOptions}
                   />
                 </div>
-              {/* Mode of Payment */}
+                {/* Mode of Payment */}
                 <div className="w-full sm:w-1/2 ">
-              <KFormField
-                fieldType={KFormFieldType.SELECT}
-                control={form.control}
-                name="modeOfPayment"
-                label="Mode of Payment"
-                options={[
-                  { label: 'Cash', value: '0' },
-                  { label: 'UPI', value: '1' },
-                ]}
-              />
-                   </div>
+                  <KFormField
+                    fieldType={KFormFieldType.SELECT}
+                    control={form.control}
+                    name="modeOfPayment"
+                    label="Mode of Payment"
+                    options={[
+                      { label: 'Cash', value: '0' },
+                      { label: 'UPI', value: '1' },
+                    ]}
+                  />
+                </div>
               </div>
 
               <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
@@ -314,9 +333,9 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
               />
               {/* Actions */}
               <div className="flex gap-3 pt-4">
-             <Button type="submit" className="flex-1">
-  Register Member
-</Button>
+                <Button type="submit" className="flex-1">
+                  Register
+                </Button>
               </div>
             </form>
           </FormProvider>
