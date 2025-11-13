@@ -12,16 +12,10 @@ import {
   KFormField,
   KFormFieldType,
 } from '@/components/shared/form/k-formfield';
-import ProfilePictureUploader from '@/components/shared/uploaders/profile-uploader';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { FormControl } from '@/components/ui/form';
 import { useGymFormOptions } from '@/hooks/use-gymform-options';
-import {
-  bloodGroupOptions,
-  feeStatusOptions,
-  genderOptions,
-} from '@/lib/constants';
+import { bloodGroupOptions, genderOptions } from '@/lib/constants';
 import { createMemberSchema } from '@/schemas/index';
 
 import { createMember } from './services';
@@ -134,44 +128,24 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
               className="space-y-4"
               onSubmit={form.handleSubmit(handleSubmit)}
             >
-              <div className="items-start gap-2 mb-6 flex justify-between">
-                <KFormField
-                  fieldType={KFormFieldType.SKELETON}
-                  control={form.control}
-                  name="profilePicture"
-                  renderSkeleton={(field) => (
-                    <FormControl>
-                      <ProfilePictureUploader
-                        files={field.value as File | null}
-                        onChange={(file) => field.onChange(file)}
-                      />
-                    </FormControl>
-                  )}
-                />
-                <Badge className="bg-secondary-blue-400 flex items-center w-fit justify-center text-sm text-white rounded-full h-[30px] py-2 px-2 border border-secondary-blue-300 bg-opacity-100">
-                  Gym no: #{memberDetails.gymNo}
-                </Badge>
-              </div>
+              <Badge className="bg-secondary-blue-400 ml-auto mb-6 flex items-center w-fit justify-center text-sm text-white rounded-full h-[30px] py-2 px-2 border border-secondary-blue-300 bg-opacity-100">
+                Gym no: #{memberDetails.gymNo}
+              </Badge>
               <h5 className="text-white text-base font-normal leading-normal mt-0!">
                 Basic Details
               </h5>
-              {/* Member Name */}
               <KFormField
                 fieldType={KFormFieldType.INPUT}
                 control={form.control}
                 name="name"
-                label="Member Name"
+                label="Name"
               />
-
-              {/* Email */}
               <KFormField
                 fieldType={KFormFieldType.INPUT}
                 control={form.control}
                 name="email"
                 label="Email"
               />
-
-              {/* Phone */}
               <KFormField
                 fieldType={KFormFieldType.PHONE_INPUT}
                 control={form.control}
@@ -179,35 +153,14 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                 label="Phone"
                 placeholder="(555) 123-4567"
               />
-
-              {/* Gender */}
+              <KFormField
+                fieldType={KFormFieldType.SELECT}
+                control={form.control}
+                name="gender"
+                label="Gender"
+                options={genderOptions}
+              />
               <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.SELECT}
-                    control={form.control}
-                    name="gender"
-                    label="Gender"
-                    options={genderOptions}
-                  />
-                </div>
-
-                {/* Package */}
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.SELECT}
-                    control={form.control}
-                    name="membershipPlanId"
-                    label="Package"
-                    options={formOptions?.membershipPlans.map((plan) => ({
-                      label: plan.planName,
-                      value: String(plan.membershipPlanId),
-                    }))}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
-                {/* height */}
                 <div className="w-full sm:w-1/2 ">
                   <KFormField
                     fieldType={KFormFieldType.INPUT}
@@ -216,8 +169,6 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                     label="Height (In Centimeters)"
                   />
                 </div>
-
-                {/* weight */}
                 <div className="w-full sm:w-1/2 ">
                   <KFormField
                     fieldType={KFormFieldType.INPUT}
@@ -227,47 +178,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   />
                 </div>
               </div>
-
               <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
-                {/* Fee Status */}
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.SELECT}
-                    control={form.control}
-                    name="feeStatus"
-                    label="Fee Status"
-                    options={feeStatusOptions}
-                  />
-                </div>
-                {/* Mode of Payment */}
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.SELECT}
-                    control={form.control}
-                    name="modeOfPayment"
-                    label="Mode of Payment"
-                    options={[
-                      { label: 'Cash', value: '0' },
-                      { label: 'UPI', value: '1' },
-                    ]}
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
-                {/* Date of joining */}
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.DATE_PICKER}
-                    control={form.control}
-                    name="doj"
-                    label="Date of joining"
-                    mode="single"
-                    floating
-                  />
-                </div>
-
-                {/* Date of birth */}
                 <div className="w-full sm:w-1/2 ">
                   <KFormField
                     fieldType={KFormFieldType.DATE_INPUT}
@@ -276,28 +187,6 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                     label="Date of birth"
                   />
                 </div>
-              </div>
-
-              <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
-                {/* Personal Trainer */}
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.SELECT}
-                    control={form.control}
-                    name="personalTrainer"
-                    label="Personal Trainer"
-                    options={
-                      formOptions?.trainers
-                        ? formOptions.trainers.map((option) => ({
-                            label: option.trainerName,
-                            value: String(option.id),
-                          }))
-                        : []
-                    }
-                  />
-                </div>
-
-                {/* Blood Group */}
                 <div className="w-full sm:w-1/2 ">
                   <KFormField
                     fieldType={KFormFieldType.SELECT}
@@ -308,17 +197,11 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   />
                 </div>
               </div>
-
-              {/* Workout Plan */}
               <KFormField
-                fieldType={KFormFieldType.SELECT}
+                fieldType={KFormFieldType.INPUT}
                 control={form.control}
-                name="workoutPlanId"
-                label="Workout Plan"
-                options={formOptions?.workoutPlans.map((option) => ({
-                  label: option.name,
-                  value: String(option.id),
-                }))}
+                name="id"
+                label="Id number"
               />
 
               {/* Address Details */}

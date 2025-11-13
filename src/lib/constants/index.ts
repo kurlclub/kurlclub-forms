@@ -4,12 +4,6 @@ export const genderOptions = [
   { label: 'Other', value: 'other' },
 ];
 
-export const feeStatusOptions = [
-  { label: 'Paid', value: 'paid' },
-  { label: 'Unpaid', value: 'unpaid' },
-  { label: 'Partially Paid', value: 'partially_paid' },
-];
-
 export const bloodGroupOptions = [
   { label: 'A+', value: 'A+' },
   { label: 'A-', value: 'A-' },
