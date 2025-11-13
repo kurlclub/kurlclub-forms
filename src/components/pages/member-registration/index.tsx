@@ -127,14 +127,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
         </div>
 
         {/* Form Card */}
-        <div
-          className="    relative rounded-lg mt-2 shadow-sm p-6 overflow-hidden
-    bg-white dark:bg-secondary-blue-700
-    before:content-[''] before:absolute before:inset-0
-    before:bg-[url('/assets/svg/gradient.svg')]
-    before:bg-contain before:bg-no-repeat before:-top-20 before:-right-50 before:bg-top-right
-    before:opacity-100 before:rounded-lg before:z-0"
-        >
+        <div className="bg-white dark:bg-secondary-blue-700 rounded-lg mt-2 shadow-sm p-6 ">
           <FormProvider {...form}>
             <form
               id="add-member-form"
