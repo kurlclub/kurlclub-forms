@@ -96,7 +96,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-background-dark py-6 px-4">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-xl mx-auto">
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -108,28 +108,28 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white dark:bg-secondary-blue-500 rounded-lg shadow-sm p-6">
+        <div className="bg-white dark:bg-secondary-blue-700 rounded-lg shadow-sm p-6">
           <FormProvider {...form}>
             <form
               id="add-member-form"
               className="space-y-4"
               onSubmit={form.handleSubmit(handleSubmit)}
             >
-              <div className="items-start gap-2 mb-6 flex justify-between ">
-                <KFormField
-                  fieldType={KFormFieldType.SKELETON}
-                  control={form.control}
-                  name="profilePicture"
-                  renderSkeleton={(field) => (
-                    <FormControl>
-                      <ProfilePictureUploader
-                        files={field.value as File | null}
-                        onChange={(file) => field.onChange(file)}
-                      />
-                    </FormControl>
-                  )}
-                />
-                <Badge className="bg-secondary-blue-400 flex items-center w-fit justify-center text-sm text-white rounded-full h-[30px] py-2 px-2 border border-secondary-blue-300 bg-opacity-100">
+              <div className="items-start gap-2 mb-6 flex justify-between">
+            <KFormField
+              fieldType={KFormFieldType.SKELETON}
+              control={form.control}
+              name="profilePicture"
+              renderSkeleton={(field) => (
+                <FormControl>
+                  <ProfilePictureUploader
+                    files={field.value as File | null}
+                    onChange={(file) => field.onChange(file)}
+                  />
+                </FormControl>
+              )}
+            />
+                       <Badge className="bg-secondary-blue-400 flex items-center w-fit justify-center text-sm text-white rounded-full h-[30px] py-2 px-2 border border-secondary-blue-300 bg-opacity-100">
                   Gym no: #{memberDetails.gymNo}
                 </Badge>
               </div>
@@ -220,9 +220,8 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                     options={feeStatusOptions}
                   />
                 </div>
-              </div>
-
               {/* Mode of Payment */}
+                <div className="w-full sm:w-1/2 ">
               <KFormField
                 fieldType={KFormFieldType.SELECT}
                 control={form.control}
@@ -233,6 +232,8 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   { label: 'UPI', value: '1' },
                 ]}
               />
+                   </div>
+              </div>
 
               <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
                 {/* Date of joining */}
@@ -313,17 +314,9 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
               />
               {/* Actions */}
               <div className="flex gap-3 pt-4">
-                <Button
-                  type="button"
-                  onClick={() => router.back()}
-                  variant="secondary"
-                  className="flex-1"
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" className="flex-1">
-                  Register Member
-                </Button>
+             <Button type="submit" className="flex-1">
+  Register Member
+</Button>
               </div>
             </form>
           </FormProvider>
