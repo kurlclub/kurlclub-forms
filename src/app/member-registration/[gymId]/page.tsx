@@ -3,18 +3,19 @@ import type { Metadata } from 'next';
 import MemberRegistration from '@/components/pages/member-registration';
 
 export const metadata: Metadata = {
-  title: 'Register Member',
-  description: 'Register new gym member',
+  title: 'Member Registration',
+  description: 'Complete your gym membership registration form.',
 };
 
 interface MemberRegistrationPageProps {
-  params: {
+  params: Promise<{
     gymId: string;
-  };
+  }>;
 }
 
-export default function MemberRegistrationPage({
+export default async function MemberRegistrationPage({
   params,
 }: MemberRegistrationPageProps) {
-  return <MemberRegistration gymId={Number(params.gymId)} />;
+  const { gymId } = await params;
+  return <MemberRegistration gymId={Number(gymId)} />;
 }
