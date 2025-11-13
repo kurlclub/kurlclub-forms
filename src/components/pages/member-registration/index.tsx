@@ -98,36 +98,43 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
   return (
     <div className="min-h-screen bg-background-dark pb-10 px-4">
       <div className="max-w-xl mx-auto">
-        
         {/* Header */}
-<div className="pt-4 pb-5 sticky top-0 bg-background-dark z-30 border-b border-white/10 backdrop-blur-md">
-  {/* Logo + Name */}
-  <div className="flex items-center justify-center gap-2 mb-2">
-    <Image
-      src="/icon-192.png"
-      alt="Kurl Club Logo"
-      width={42}
-      height={42}
-      className="shadow-md rounded-lg"
-    />
-    <h1 className="text-2xl font-bold text-white tracking-tight">
-      Gymnazo
-    </h1>
-  </div>
+        <div className="pt-4 pb-5 sticky top-0 bg-background-dark z-30 border-b border-white/10 backdrop-blur-md">
+          {/* Logo + Name */}
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Image
+              src="/icon-192.png"
+              alt="Kurl Club Logo"
+              width={42}
+              height={42}
+              className="shadow-md rounded-lg"
+            />
+            <h1 className="text-2xl font-bold text-white tracking-tight">
+              Gymnazo
+            </h1>
+          </div>
 
-  {/* Greeting */}
-<p className="text-gray-400 text-[14px] text-center mb-2">
-  💫 Every great transformation begins with one step. Let’s get started! ❤️
-</p>
+          {/* Greeting */}
+          <p className="text-gray-400 text-[14px] text-center mb-2">
+            💫 Every great transformation begins with one step. Let’s get
+            started! ❤️
+          </p>
 
-  {/* Section Title */}
-<h2 className="text-[19px] font-semibold text-gray-100 text-center">
-  Fill in your details below to join
-</h2>
-</div>
+          {/* Section Title */}
+          <h2 className="text-[19px] font-semibold text-gray-100 text-center">
+            Fill in your details below to join
+          </h2>
+        </div>
 
         {/* Form Card */}
-        <div className="bg-white dark:bg-secondary-blue-700 rounded-lg mt-2 shadow-sm p-6 ">
+        <div
+          className="    relative rounded-lg mt-2 shadow-sm p-6 overflow-hidden
+    bg-white dark:bg-secondary-blue-700
+    before:content-[''] before:absolute before:inset-0
+    before:bg-[url('/assets/svg/gradient.svg')]
+    before:bg-contain before:bg-no-repeat before:-top-20 before:-right-50 before:bg-top-right
+    before:opacity-100 before:rounded-lg before:z-0"
+        >
           <FormProvider {...form}>
             <form
               id="add-member-form"
