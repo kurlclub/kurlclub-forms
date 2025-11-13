@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import { AppProviders } from '@/providers';
 
 import './globals.css';
+import Footer from '@/components/layout/footer';
 
 const figtree = localFont({
   src: [
@@ -45,6 +46,7 @@ export default function RootLayout({
         className={`${figtree.className} bg-secondary-blue-500 antialiased`}
       >
         <AppProviders>{children}</AppProviders>
+<Footer />
       </body>
     </html>
   );
