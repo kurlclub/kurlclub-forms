@@ -19,3 +19,11 @@ export const paymentMethodOptions = [
   { label: 'Cash', value: 'cash' },
   { label: 'UPI', value: 'upi' },
 ];
+
+export const idTypeOptions = [
+  { label: 'Aadhaar Card', value: 'aadhaar' },
+  { label: 'Driving License', value: 'driving_license' },
+  { label: 'Passport', value: 'passport' },
+  { label: 'Emirates ID', value: 'emirates_id' },
+  { label: 'Other Government ID', value: 'other' },
+];

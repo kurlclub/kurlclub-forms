@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
-import Footer from '@/components/layout/footer';
+import Footer from '@/components/shared/layout/footer';
 import { AppProviders } from '@/providers';
 
 import './globals.css';
@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${figtree.className} bg-secondary-blue-500 antialiased`}
+        className={`${figtree.className} bg-secondary-blue-500 antialiased h-dvh overflow-y-auto`}
       >
         <AppProviders>{children}</AppProviders>
         <Footer />

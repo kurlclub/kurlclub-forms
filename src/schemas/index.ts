@@ -10,7 +10,16 @@ export const createMemberSchema = z.object({
     })
     .optional(),
   name: z.string().min(1, 'Name is required'),
-  id: z.string().min(1, 'Id number is required'),
+  idType: z.string().min(1, 'ID type is required'),
+  id: z.string().min(1, 'ID number is required'),
+  idDocument: z
+    .custom<File | null>((value) => value instanceof File || value === null, {
+      error: 'ID document must be a file.',
+    })
+    .refine((file) => file === null || file.size <= 10 * 1024 * 1024, {
+      error: 'File size must be less than 10MB',
+    })
+    .optional(),
   dob: z.iso.datetime('Please select a valid Date of Birth.'),
   doj: z.iso.datetime('Please select a valid Date of Joining.'),
   bloodGroup: z.string().min(1, 'Blood group selection is required'),

@@ -12,10 +12,14 @@ import {
   KFormField,
   KFormFieldType,
 } from '@/components/shared/form/k-formfield';
-import { Badge } from '@/components/ui/badge';
+import ProfilePictureUploader from '@/components/shared/profile-picture-uploader';
 import { Button } from '@/components/ui/button';
-import { useGymFormOptions } from '@/hooks/use-gymform-options';
-import { bloodGroupOptions, genderOptions } from '@/lib/constants';
+import { FormControl } from '@/components/ui/form';
+import {
+  bloodGroupOptions,
+  genderOptions,
+  idTypeOptions,
+} from '@/lib/constants';
 import { createMemberSchema } from '@/schemas/index';
 
 import { createMember } from './services';
@@ -50,17 +54,22 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
       workoutPlanId: '',
       modeOfPayment: '',
       customSessionRate: '',
+      idType: '',
+      id: '',
+      idDocument: null,
     },
   });
 
-  const { formOptions } = useGymFormOptions(gymId);
   const queryClient = useQueryClient();
 
   const handleSubmit = async (data: CreateMemberDetailsData) => {
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
-      if (key === 'profilePicture' && value instanceof File) {
+      if (
+        (key === 'profilePicture' || key === 'idDocument') &&
+        value instanceof File
+      ) {
         return formData.append(key, value);
       }
 
@@ -68,7 +77,9 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
         return formData.append(key, value === '' ? '0' : String(value));
       }
 
-      formData.append(key, String(value));
+      if (value !== null && value !== undefined) {
+        formData.append(key, String(value));
+      }
     });
 
     if (gymId) {
@@ -87,141 +98,178 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
     }
   };
 
-  const memberDetails = { name: 'New Member', gymNo: '00000' };
-
   return (
-    <div className="min-h-screen bg-background-dark pb-10 px-4">
-      <div className="max-w-xl mx-auto">
+    <div className="bg-background-dark">
+      <div className="max-w-xl mx-auto w-full">
         {/* Header */}
-        <div className="pt-4 pb-5 sticky top-0 bg-background-dark z-30 border-b border-white/10 backdrop-blur-md">
+        <div className="pt-6 pb-6 px-4 border-b border-white/10">
           {/* Logo + Name */}
-          <div className="flex items-center justify-center gap-2 mb-2">
+          <div className="flex items-center gap-3 mb-4">
             <Image
               src="/icon-192.png"
               alt="Kurl Club Logo"
-              width={42}
-              height={42}
+              width={48}
+              height={48}
               className="shadow-md rounded-lg"
             />
-            <h1 className="text-2xl font-bold text-white tracking-tight">
+            <h1 className="text-3xl font-bold text-white tracking-tight">
               Gymnazo
             </h1>
           </div>
 
-          {/* Greeting */}
-          <p className="text-gray-400 text-[14px] text-center mb-2">
-            💫 Every great transformation begins with one step. Let’s get
-            started! ❤️
-          </p>
-
-          {/* Section Title */}
-          <h2 className="text-[19px] font-semibold text-gray-100 text-center">
-            Fill in your details below to join
+          {/* Title */}
+          <h2 className="text-2xl font-semibold text-white mb-2">
+            Member Registration
           </h2>
+
+          {/* Description */}
+          <p className="text-gray-400 text-[15px] leading-relaxed">
+            Welcome! Please complete this form to begin your membership journey
+            with us. All fields are required unless marked optional.
+          </p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-white dark:bg-secondary-blue-700 rounded-lg mt-2 shadow-sm p-6 ">
-          <FormProvider {...form}>
-            <form
-              id="add-member-form"
-              className="space-y-4"
-              onSubmit={form.handleSubmit(handleSubmit)}
-            >
-              <Badge className="bg-secondary-blue-400 ml-auto mb-6 flex items-center w-fit justify-center text-sm text-white rounded-full h-[30px] py-2 px-2 border border-secondary-blue-300 bg-opacity-100">
-                Gym no: #{memberDetails.gymNo}
-              </Badge>
-              <h5 className="text-white text-base font-normal leading-normal mt-0!">
-                Basic Details
-              </h5>
-              <KFormField
-                fieldType={KFormFieldType.INPUT}
-                control={form.control}
-                name="name"
-                label="Name"
-              />
-              <KFormField
-                fieldType={KFormFieldType.INPUT}
-                control={form.control}
-                name="email"
-                label="Email"
-              />
-              <KFormField
-                fieldType={KFormFieldType.PHONE_INPUT}
-                control={form.control}
-                name="phone"
-                label="Phone"
-                placeholder="(555) 123-4567"
-              />
-              <KFormField
-                fieldType={KFormFieldType.SELECT}
-                control={form.control}
-                name="gender"
-                label="Gender"
-                options={genderOptions}
-              />
-              <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.INPUT}
-                    control={form.control}
-                    name="height"
-                    label="Height (In Centimeters)"
-                  />
+        <div className="px-4 py-4 pb-8">
+          <div className="bg-white dark:bg-secondary-blue-700 rounded-lg shadow-sm p-6">
+            <FormProvider {...form}>
+              <form
+                id="add-member-form"
+                className="space-y-4"
+                onSubmit={form.handleSubmit(handleSubmit)}
+              >
+                <h5 className="text-white text-base font-normal leading-normal mt-0!">
+                  Basic Details
+                </h5>
+                <KFormField
+                  fieldType={KFormFieldType.INPUT}
+                  control={form.control}
+                  name="name"
+                  label="Name"
+                />
+                <KFormField
+                  fieldType={KFormFieldType.INPUT}
+                  control={form.control}
+                  name="email"
+                  label="Email"
+                />
+                <KFormField
+                  fieldType={KFormFieldType.PHONE_INPUT}
+                  control={form.control}
+                  name="phone"
+                  label="Phone"
+                  placeholder="(555) 123-4567"
+                />
+                <KFormField
+                  fieldType={KFormFieldType.SELECT}
+                  control={form.control}
+                  name="gender"
+                  label="Gender"
+                  options={genderOptions}
+                />
+                <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
+                  <div className="w-full sm:w-1/2 ">
+                    <KFormField
+                      fieldType={KFormFieldType.INPUT}
+                      control={form.control}
+                      name="height"
+                      label="Height (In Centimeters)"
+                    />
+                  </div>
+                  <div className="w-full sm:w-1/2 ">
+                    <KFormField
+                      fieldType={KFormFieldType.INPUT}
+                      control={form.control}
+                      name="weight"
+                      label="Weight (In Kilograms)"
+                    />
+                  </div>
                 </div>
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.INPUT}
-                    control={form.control}
-                    name="weight"
-                    label="Weight (In Kilograms)"
-                  />
+                <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
+                  <div className="w-full sm:w-1/2 ">
+                    <KFormField
+                      fieldType={KFormFieldType.DATE_INPUT}
+                      control={form.control}
+                      name="dob"
+                      label="Date of birth"
+                    />
+                  </div>
+                  <div className="w-full sm:w-1/2 ">
+                    <KFormField
+                      fieldType={KFormFieldType.SELECT}
+                      control={form.control}
+                      name="bloodGroup"
+                      label="Blood Group"
+                      options={bloodGroupOptions}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.DATE_INPUT}
-                    control={form.control}
-                    name="dob"
-                    label="Date of birth"
-                  />
+                {/* ID Verification */}
+                <h5 className="text-white text-base font-normal leading-normal mt-8!">
+                  ID Verification
+                </h5>
+                <p className="text-gray-400 text-sm -mt-2 mb-2">
+                  Please provide a government-issued ID for verification
+                </p>
+                <KFormField
+                  fieldType={KFormFieldType.SELECT}
+                  control={form.control}
+                  name="idType"
+                  label="ID Type"
+                  options={idTypeOptions}
+                />
+                <KFormField
+                  fieldType={KFormFieldType.INPUT}
+                  control={form.control}
+                  name="id"
+                  label="ID Number"
+                />
+                <div className="flex gap-3 flex-wrap sm:flex-nowrap">
+                  <div className="w-full sm:w-1/2">
+                    <KFormField
+                      fieldType={KFormFieldType.SKELETON}
+                      control={form.control}
+                      name="profilePicture"
+                      renderSkeleton={(field) => (
+                        <FormControl>
+                          <ProfilePictureUploader
+                            files={field.value as File | null}
+                            onChange={(file) => field.onChange(file)}
+                          />
+                        </FormControl>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full sm:w-1/2">
+                    <KFormField
+                      fieldType={KFormFieldType.FILE_UPLOAD}
+                      control={form.control}
+                      name="idDocument"
+                      label="ID Copy (Optional)"
+                      type="document"
+                    />
+                  </div>
                 </div>
-                <div className="w-full sm:w-1/2 ">
-                  <KFormField
-                    fieldType={KFormFieldType.SELECT}
-                    control={form.control}
-                    name="bloodGroup"
-                    label="Blood Group"
-                    options={bloodGroupOptions}
-                  />
-                </div>
-              </div>
-              <KFormField
-                fieldType={KFormFieldType.INPUT}
-                control={form.control}
-                name="id"
-                label="Id number"
-              />
 
-              {/* Address Details */}
-              <h5 className="text-white text-base font-normal leading-normal mt-8!">
-                Address Details
-              </h5>
-              <KFormField
-                fieldType={KFormFieldType.TEXTAREA}
-                control={form.control}
-                name="address"
-                label="Address Line"
-              />
-              {/* Actions */}
-              <div className="flex gap-3 pt-4">
-                <Button type="submit" className="flex-1">
-                  Register
-                </Button>
-              </div>
-            </form>
-          </FormProvider>
+                {/* Address Details */}
+                <h5 className="text-white text-base font-normal leading-normal mt-8!">
+                  Address Details
+                </h5>
+                <KFormField
+                  fieldType={KFormFieldType.TEXTAREA}
+                  control={form.control}
+                  name="address"
+                  label="Address Line"
+                />
+                {/* Actions */}
+                <div className="flex gap-3 pt-4">
+                  <Button type="submit" className="flex-1">
+                    Register
+                  </Button>
+                </div>
+              </form>
+            </FormProvider>
+          </div>
         </div>
       </div>
     </div>

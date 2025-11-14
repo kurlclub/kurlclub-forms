@@ -13,6 +13,7 @@ import { E164Number } from 'libphonenumber-js/core';
 
 import { KDateInput } from '@/components/shared/form/k-date-input';
 import { KDatePicker } from '@/components/shared/form/k-datepicker';
+import { KFileUpload } from '@/components/shared/form/k-file-upload';
 import { KInput } from '@/components/shared/form/k-input';
 import { KMultiSelect } from '@/components/shared/form/k-multi-select';
 import { KSelect } from '@/components/shared/form/k-select';
@@ -37,6 +38,7 @@ export enum KFormFieldType {
   SELECT = 'select',
   MULTISELECT = 'multiSelect',
   SKELETON = 'skeleton',
+  FILE_UPLOAD = 'fileUpload',
 }
 
 interface Option {
@@ -244,6 +246,17 @@ const RenderField = <T extends FieldValues>({
             </label>
           </div>
         </FormControl>
+      );
+
+    case KFormFieldType.FILE_UPLOAD:
+      return (
+        <KFileUpload
+          field={field}
+          name={name}
+          label={label}
+          type={type}
+          disabled={props.disabled}
+        />
       );
 
     case KFormFieldType.SKELETON:
