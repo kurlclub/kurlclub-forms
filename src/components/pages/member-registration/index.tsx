@@ -19,6 +19,8 @@ import {
   bloodGroupOptions,
   genderOptions,
   idTypeOptions,
+  purposeOptions,
+  relationOptions,
 } from '@/lib/constants';
 import { createMemberSchema } from '@/schemas/index';
 
@@ -57,6 +59,11 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
       idType: '',
       id: '',
       idDocument: null,
+      purpose: '',
+      medicalHistory: '',
+      emergencyContactName: '',
+      emergencyContactPhone: '',
+      emergencyContactRelation: '',
     },
   });
 
@@ -139,19 +146,21 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                 onSubmit={form.handleSubmit(handleSubmit)}
               >
                 <h5 className="text-white text-base font-normal leading-normal mt-0!">
-                  Basic Details
+                  Personal Information
                 </h5>
                 <KFormField
                   fieldType={KFormFieldType.INPUT}
                   control={form.control}
                   name="name"
                   label="Name"
+                  mandetory
                 />
                 <KFormField
                   fieldType={KFormFieldType.INPUT}
                   control={form.control}
                   name="email"
                   label="Email"
+                  mandetory
                 />
                 <KFormField
                   fieldType={KFormFieldType.PHONE_INPUT}
@@ -159,6 +168,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   name="phone"
                   label="Phone"
                   placeholder="(555) 123-4567"
+                  mandetory
                 />
                 <KFormField
                   fieldType={KFormFieldType.SELECT}
@@ -166,6 +176,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   name="gender"
                   label="Gender"
                   options={genderOptions}
+                  mandetory
                 />
                 <div className="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
                   <div className="w-full sm:w-1/2 ">
@@ -192,6 +203,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       control={form.control}
                       name="dob"
                       label="Date of birth"
+                      mandetory
                     />
                   </div>
                   <div className="w-full sm:w-1/2 ">
@@ -201,12 +213,39 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       name="bloodGroup"
                       label="Blood Group"
                       options={bloodGroupOptions}
+                      mandetory
                     />
                   </div>
                 </div>
+                <KFormField
+                  fieldType={KFormFieldType.TEXTAREA}
+                  control={form.control}
+                  name="address"
+                  label="Address"
+                  mandetory
+                />
+
+                {/* Health & Fitness */}
+                <h5 className="text-white text-base font-normal leading-normal mt-8!">
+                  Health & Fitness Goals
+                </h5>
+                <KFormField
+                  fieldType={KFormFieldType.SELECT}
+                  control={form.control}
+                  name="purpose"
+                  label="What brings you here?"
+                  options={purposeOptions}
+                />
+                <KFormField
+                  fieldType={KFormFieldType.TEXTAREA}
+                  control={form.control}
+                  name="medicalHistory"
+                  label="Medical History or Notes"
+                />
+
                 {/* ID Verification */}
                 <h5 className="text-white text-base font-normal leading-normal mt-8!">
-                  ID Verification
+                  Identity Verification
                 </h5>
                 <p className="text-gray-400 text-sm -mt-2 mb-2">
                   Please provide a government-issued ID for verification
@@ -217,12 +256,14 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   name="idType"
                   label="ID Type"
                   options={idTypeOptions}
+                  mandetory
                 />
                 <KFormField
                   fieldType={KFormFieldType.INPUT}
                   control={form.control}
                   name="id"
                   label="ID Number"
+                  mandetory
                 />
                 <div className="flex gap-3">
                   <div className="w-1/2">
@@ -245,21 +286,39 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       fieldType={KFormFieldType.FILE_UPLOAD}
                       control={form.control}
                       name="idDocument"
-                      label="ID Copy (Optional)"
+                      label="ID Copy"
                       type="document"
+                      mandetory
                     />
                   </div>
                 </div>
 
-                {/* Address Details */}
+                {/* Emergency Contact */}
                 <h5 className="text-white text-base font-normal leading-normal mt-8!">
-                  Address Details
+                  Emergency Contact
                 </h5>
+                <p className="text-gray-400 text-sm -mt-2 mb-2">
+                  Who should we contact in case of emergency?
+                </p>
                 <KFormField
-                  fieldType={KFormFieldType.TEXTAREA}
+                  fieldType={KFormFieldType.INPUT}
                   control={form.control}
-                  name="address"
-                  label="Address Line"
+                  name="emergencyContactName"
+                  label="Emergency Contact Name"
+                />
+                <KFormField
+                  fieldType={KFormFieldType.PHONE_INPUT}
+                  control={form.control}
+                  name="emergencyContactPhone"
+                  label="Emergency Contact Phone"
+                  placeholder="(555) 123-4567"
+                />
+                <KFormField
+                  fieldType={KFormFieldType.SELECT}
+                  control={form.control}
+                  name="emergencyContactRelation"
+                  label="Relation"
+                  options={relationOptions}
                 />
                 {/* Actions */}
                 <div className="flex gap-3 pt-4">

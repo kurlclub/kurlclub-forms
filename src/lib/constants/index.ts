@@ -27,3 +27,20 @@ export const idTypeOptions = [
   { label: 'Emirates ID', value: 'emirates_id' },
   { label: 'Other Government ID', value: 'other' },
 ];
+
+export const purposeOptions = [
+  { label: 'Weight Loss', value: 'weight_loss' },
+  { label: 'Muscle Gain', value: 'muscle_gain' },
+  { label: 'General Fitness', value: 'general_fitness' },
+  { label: 'Athletic Performance', value: 'athletic_performance' },
+  { label: 'Health & Wellness', value: 'health_wellness' },
+  { label: 'Rehabilitation', value: 'rehabilitation' },
+];
+
+export const relationOptions = [
+  { label: 'Parent', value: 'parent' },
+  { label: 'Spouse', value: 'spouse' },
+  { label: 'Sibling', value: 'sibling' },
+  { label: 'Friend', value: 'friend' },
+  { label: 'Other', value: 'other' },
+];

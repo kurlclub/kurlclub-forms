@@ -30,15 +30,27 @@ export const createMemberSchema = z.object({
     .string()
     .regex(/^\+?[1-9]\d{1,14}$/, 'Phone number must be at least 10 digits'),
   email: z.email('Invalid email format'),
-  height: z.string().min(1, 'Height is required'),
-  weight: z.string().min(1, 'Weight is required'),
+  height: z.string().optional(),
+  weight: z.string().optional(),
   personalTrainer: z.union([z.string(), z.number()]),
   address: z
     .string()
     .min(1, 'Address is required.')
     .max(250, 'Address must not exceed 250 characters.'),
+  purpose: z.string().min(1, 'Purpose is required'),
+  medicalHistory: z.string().optional(),
+  emergencyContactName: z.string().min(1, 'Emergency contact name is required'),
+  emergencyContactPhone: z
+    .string()
+    .regex(
+      /^\+?[1-9]\d{1,14}$/,
+      'Emergency contact phone must be at least 10 digits'
+    ),
   amountPaid: z.string().optional(),
   workoutPlanId: z.string().min(1, 'Workout plan selection is required'),
   modeOfPayment: z.string().optional(),
   customSessionRate: z.string().optional(),
+  emergencyContactRelation: z
+    .string()
+    .min(1, 'Emergency contact relation is required'),
 });
