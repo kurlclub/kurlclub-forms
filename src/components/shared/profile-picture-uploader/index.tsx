@@ -92,12 +92,12 @@ export default function ProfilePictureUploader({
           <img
             src={image}
             alt="Preview"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
           <button
             type="button"
             onClick={handleDelete}
-            className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1.5 transition-colors"
+            className="absolute top-2 right-2 bg-red-500/50 hover:bg-red-500/70 cursor-pointer text-white rounded-full p-1.5 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>

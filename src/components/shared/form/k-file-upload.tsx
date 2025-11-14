@@ -1,6 +1,7 @@
+import Image from 'next/image';
 import { ControllerRenderProps, FieldPath, FieldValues } from 'react-hook-form';
 
-import { FileText, Upload, X } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 
 import { FormControl } from '@/components/ui/form';
 
@@ -72,10 +73,17 @@ export function KFileUpload<T extends FieldValues>({
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="flex flex-col justify-center h-full px-3">
-                <FileText className="w-12 h-12 text-gray-400 mb-2 shrink-0 mx-auto" />
+              <div className="flex flex-col justify-center h-full gap-3 px-3">
+                <span className="mx-auto">
+                  <Image
+                    alt="pdf"
+                    height={40}
+                    width={40}
+                    src={'/assets/svg/pdf_icon.svg'}
+                  />
+                </span>
                 <p
-                  className="text-xs text-gray-300 w-full truncate overflow-hidden text-ellipsis text-center"
+                  className="text-[10px] sm:text-xs text-wrap text-gray-300 w-full text-center"
                   title={field.value.name}
                 >
                   {field.value.name}
@@ -85,7 +93,7 @@ export function KFileUpload<T extends FieldValues>({
             <button
               type="button"
               onClick={() => field.onChange(null)}
-              className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1.5 transition-colors"
+              className="absolute top-2 right-2 bg-red-500/50 hover:bg-red-500/70 cursor-pointer text-white rounded-full p-1.5 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>

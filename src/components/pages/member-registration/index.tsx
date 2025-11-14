@@ -102,7 +102,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
     <div className="bg-background-dark">
       <div className="max-w-xl mx-auto w-full">
         {/* Header */}
-        <div className="pt-6 pb-6 px-4 border-b border-white/10">
+        <div className="pt-6 pb-3 px-4 border-b border-white/10">
           {/* Logo + Name */}
           <div className="flex items-center gap-3 mb-4">
             <Image
@@ -112,7 +112,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
               height={48}
               className="shadow-md rounded-lg"
             />
-            <h1 className="text-3xl font-bold text-white tracking-tight">
+            <h1 className="text-3xl font-bold text-white tracking-tight text-center">
               Gymnazo
             </h1>
           </div>
@@ -224,8 +224,8 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   name="id"
                   label="ID Number"
                 />
-                <div className="flex gap-3 flex-wrap sm:flex-nowrap">
-                  <div className="w-full sm:w-1/2">
+                <div className="flex gap-3">
+                  <div className="w-1/2">
                     <KFormField
                       fieldType={KFormFieldType.SKELETON}
                       control={form.control}
@@ -240,7 +240,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       )}
                     />
                   </div>
-                  <div className="w-full sm:w-1/2">
+                  <div className="w-1/2">
                     <KFormField
                       fieldType={KFormFieldType.FILE_UPLOAD}
                       control={form.control}
