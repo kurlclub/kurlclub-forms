@@ -21,23 +21,19 @@ export const createMemberSchema = z.object({
     })
     .optional(),
   dob: z.iso.datetime('Please select a valid Date of Birth.'),
-  doj: z.iso.datetime('Please select a valid Date of Joining.'),
   bloodGroup: z.string().min(1, 'Blood group selection is required'),
   gender: z.string().min(1, 'Gender selection is required'),
-  membershipPlanId: z.string().min(1, 'Package selection is required'),
-  feeStatus: z.string().optional(),
   phone: z
     .string()
     .regex(/^\+?[1-9]\d{1,14}$/, 'Phone number must be at least 10 digits'),
   email: z.email('Invalid email format'),
   height: z.string().optional(),
   weight: z.string().optional(),
-  personalTrainer: z.union([z.string(), z.number()]),
   address: z
     .string()
     .min(1, 'Address is required.')
     .max(250, 'Address must not exceed 250 characters.'),
-  purpose: z.string().min(1, 'Purpose is required'),
+  purpose: z.string().min(1, 'What brings you here is required'),
   medicalHistory: z.string().optional(),
   emergencyContactName: z.string().min(1, 'Emergency contact name is required'),
   emergencyContactPhone: z
@@ -46,10 +42,6 @@ export const createMemberSchema = z.object({
       /^\+?[1-9]\d{1,14}$/,
       'Emergency contact phone must be at least 10 digits'
     ),
-  amountPaid: z.string().optional(),
-  workoutPlanId: z.string().min(1, 'Workout plan selection is required'),
-  modeOfPayment: z.string().optional(),
-  customSessionRate: z.string().optional(),
   emergencyContactRelation: z
     .string()
     .min(1, 'Emergency contact relation is required'),

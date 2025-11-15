@@ -1,12 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
-import { z } from 'zod/v4';
 
 import {
   KFormField,
@@ -15,6 +13,9 @@ import {
 import ProfilePictureUploader from '@/components/shared/profile-picture-uploader';
 import { Button } from '@/components/ui/button';
 import { FormControl } from '@/components/ui/form';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useCreateMember } from '@/hooks/use-create-member';
+import { useGymDetails } from '@/hooks/use-gym-details';
 import {
   bloodGroupOptions,
   genderOptions,
@@ -22,18 +23,20 @@ import {
   purposeOptions,
   relationOptions,
 } from '@/lib/constants';
+import { type CreateMemberDetailsData } from '@/lib/utils/member-form-mapper';
 import { createMemberSchema } from '@/schemas/index';
 
-import { createMember } from './services';
-
-type CreateMemberDetailsData = z.infer<typeof createMemberSchema>;
+import SuccessScreen from './success-screen';
 
 interface MemberRegisterProps {
   gymId: number;
 }
 
 export default function MemberRegister({ gymId }: MemberRegisterProps) {
-  const router = useRouter();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const { data: gymDetails } = useGymDetails(gymId);
+  const mutation = useCreateMember(gymId);
 
   const form = useForm<CreateMemberDetailsData>({
     resolver: zodResolver(createMemberSchema),
@@ -42,20 +45,12 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
       name: '',
       email: '',
       phone: '',
-      amountPaid: '',
       dob: '',
-      doj: new Date().toISOString(),
       height: '',
       weight: '',
       address: '',
       gender: '',
-      membershipPlanId: '',
-      feeStatus: '',
-      personalTrainer: 0,
       bloodGroup: '',
-      workoutPlanId: '',
-      modeOfPayment: '',
-      customSessionRate: '',
       idType: '',
       id: '',
       idDocument: null,
@@ -67,43 +62,16 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
     },
   });
 
-  const queryClient = useQueryClient();
-
-  const handleSubmit = async (data: CreateMemberDetailsData) => {
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-      if (
-        (key === 'profilePicture' || key === 'idDocument') &&
-        value instanceof File
-      ) {
-        return formData.append(key, value);
-      }
-
-      if (key === 'personalTrainer') {
-        return formData.append(key, value === '' ? '0' : String(value));
-      }
-
-      if (value !== null && value !== undefined) {
-        formData.append(key, String(value));
-      }
+  const onSubmit = (data: CreateMemberDetailsData) => {
+    mutation.mutate(data, {
+      onSuccess: () => setIsSubmitted(true),
+      onError: (error: Error) => {
+        alert(error.message || 'Registration failed. Please try again.');
+      },
     });
-
-    if (gymId) {
-      formData.append('gymId', String(gymId));
-    }
-
-    const result = await createMember(formData);
-
-    if (result.success) {
-      alert(result.success);
-      await queryClient.invalidateQueries({ queryKey: ['gymMembers', gymId] });
-      form.reset();
-      router.push('/members');
-    } else {
-      alert(result.error);
-    }
   };
+
+  if (isSubmitted) return <SuccessScreen />;
 
   return (
     <div className="bg-background-dark">
@@ -119,9 +87,13 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
               height={48}
               className="shadow-md rounded-lg"
             />
-            <h1 className="text-3xl font-bold text-white tracking-tight text-center">
-              Gymnazo
-            </h1>
+            {gymDetails ? (
+              <h1 className="text-3xl font-bold text-white tracking-tight text-center">
+                {gymDetails.gymName}
+              </h1>
+            ) : (
+              <Skeleton className="h-9 w-48" />
+            )}
           </div>
 
           {/* Title */}
@@ -130,10 +102,18 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
           </h2>
 
           {/* Description */}
-          <p className="text-gray-400 text-[15px] leading-relaxed">
-            Welcome! Please complete this form to begin your membership journey
-            with us. All fields are required unless marked optional.
-          </p>
+          {gymDetails ? (
+            <p className="text-gray-400 text-[15px] leading-relaxed">
+              Welcome to {gymDetails.gymName}! Please complete this form to
+              begin your membership journey with us. All fields are required
+              unless marked optional.
+            </p>
+          ) : (
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+            </div>
+          )}
         </div>
 
         {/* Form Card */}
@@ -143,7 +123,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
               <form
                 id="add-member-form"
                 className="space-y-4"
-                onSubmit={form.handleSubmit(handleSubmit)}
+                onSubmit={form.handleSubmit(onSubmit)}
               >
                 <h5 className="text-white text-base font-normal leading-normal mt-0!">
                   Personal Information
@@ -322,8 +302,12 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                 />
                 {/* Actions */}
                 <div className="flex gap-3 pt-4">
-                  <Button type="submit" className="flex-1">
-                    Register
+                  <Button
+                    type="submit"
+                    className="flex-1"
+                    disabled={mutation.isPending}
+                  >
+                    {mutation.isPending ? 'Submitting...' : 'Register'}
                   </Button>
                 </div>
               </form>
