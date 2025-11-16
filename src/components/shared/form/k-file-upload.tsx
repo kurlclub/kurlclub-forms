@@ -57,8 +57,8 @@ export function KFileUpload<T extends FieldValues>({
                   {type === 'image'
                     ? 'JPG, PNG (Max 5MB)'
                     : type === 'document'
-                      ? 'PDF only (Max 10MB)'
-                      : 'PDF, JPG, PNG (Max 10MB)'}
+                      ? 'PDF only (Max 4MB)'
+                      : 'PDF, JPG, PNG (Max 4MB)'}
                 </p>
               </div>
             </label>

@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function Home() {
-  redirect('/member-registration/2');
+  redirect('/member-registration/6');
 }

@@ -11,21 +11,28 @@ export const createMemberSchema = z.object({
     .optional(),
   name: z.string().min(1, 'Name is required'),
   idType: z.string().min(1, 'ID type is required'),
-  id: z.string().min(1, 'ID number is required'),
+  id: z
+    .string()
+    .min(1, 'ID number is required')
+    .max(20, 'ID number must not exceed 20 characters'),
   idDocument: z
-    .custom<File | null>((value) => value instanceof File || value === null, {
-      error: 'ID document must be a file.',
+    .custom<File>((value) => value instanceof File, {
+      error: 'ID document is required.',
     })
-    .refine((file) => file === null || file.size <= 10 * 1024 * 1024, {
-      error: 'File size must be less than 10MB',
+    .refine((file) => file.type === 'application/pdf', {
+      error: 'Only PDF files are allowed',
     })
-    .optional(),
+    .refine((file) => file.size <= 4 * 1024 * 1024, {
+      error: 'File size must be less than 4MB',
+    }),
   dob: z.iso.datetime('Please select a valid Date of Birth.'),
   bloodGroup: z.string().min(1, 'Blood group selection is required'),
   gender: z.string().min(1, 'Gender selection is required'),
   phone: z
     .string()
-    .regex(/^\+?[1-9]\d{1,14}$/, 'Phone number must be at least 10 digits'),
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number must not exceed 15 digits')
+    .regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format'),
   email: z.email('Invalid email format'),
   height: z.string().optional(),
   weight: z.string().optional(),
@@ -38,10 +45,9 @@ export const createMemberSchema = z.object({
   emergencyContactName: z.string().min(1, 'Emergency contact name is required'),
   emergencyContactPhone: z
     .string()
-    .regex(
-      /^\+?[1-9]\d{1,14}$/,
-      'Emergency contact phone must be at least 10 digits'
-    ),
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number must not exceed 15 digits')
+    .regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format'),
   emergencyContactRelation: z
     .string()
     .min(1, 'Emergency contact relation is required'),

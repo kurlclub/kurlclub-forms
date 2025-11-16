@@ -53,7 +53,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
       bloodGroup: '',
       idType: '',
       id: '',
-      idDocument: null,
+      idDocument: undefined as unknown as File,
       purpose: '',
       medicalHistory: '',
       emergencyContactName: '',
@@ -243,6 +243,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   control={form.control}
                   name="id"
                   label="ID Number"
+                  maxLength={20}
                   mandetory
                 />
                 <div className="flex gap-3">
