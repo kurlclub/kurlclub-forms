@@ -24,8 +24,7 @@ export const metadata: Metadata = {
     template: '%s | KurlClub Forms',
     default: 'KurlClub Forms',
   },
-  description:
-    'Registration and form management platform for KurlClub fitness centers.',
+  description: 'Registration and form management platform for KurlClub fitness centers.',
   icons: {
     icon: ['/favicon.ico', '/icon.svg'],
   },
@@ -33,7 +32,13 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1, 
+  },
 };
+
 
 export default function RootLayout({
   children,
