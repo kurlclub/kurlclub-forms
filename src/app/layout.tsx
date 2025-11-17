@@ -33,11 +33,7 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
+  viewport: null,
 };
 
 export default function RootLayout({
@@ -47,6 +43,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </head>
       <body
         className={`${figtree.className} bg-secondary-blue-500 antialiased h-dvh overflow-y-auto`}
       >
