@@ -156,6 +156,10 @@ const RenderField = <T extends FieldValues>({
             value={field.value as E164Number | undefined}
             onChange={field.onChange}
             className={`peer ${className ? className : 'input-phone'}`}
+            countrySelectProps={{
+              className: 'country-select',
+              tabIndex: -1,
+            }}
           />
         </FormControl>
       );
