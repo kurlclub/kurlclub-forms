@@ -260,6 +260,10 @@
   @apply w-full! rounded-md! h-[52px]! py-[17px]! px-4! text-base! text-white! bg-primary-blue-400! border-0! appearance-none! focus:outline-hidden! focus:ring-0!;
 }
 
+@utility country-select {
+  @apply bg-secondary-blue-500 text-white border-none! outline-none;
+}
+
 @utility k-input {
   /* .PhoneInputCountrySelect{
     @apply flex items-center border border-secondary-blue-400 rounded-md h-14;

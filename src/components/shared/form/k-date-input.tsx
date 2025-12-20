@@ -97,7 +97,11 @@ const KDateInput = forwardRef<HTMLInputElement, KDateInputProps>(
       }
 
       // Only allow numbers
-      if (e.keyCode < 48 || e.keyCode > 57) {
+      const isNumber =
+        (e.keyCode >= 48 && e.keyCode <= 57) || // top row
+        (e.keyCode >= 96 && e.keyCode <= 105); // numpad
+
+      if (!isNumber) {
         e.preventDefault();
       }
     };
@@ -145,18 +149,6 @@ const KDateInput = forwardRef<HTMLInputElement, KDateInputProps>(
         >
           {label}
         </label>
-        {!hasContent && !isFocused && (
-          <div
-            className={cn(
-              'absolute text-primary-blue-300 pointer-events-none',
-              size === 'sm'
-                ? 'right-3 top-2.5 text-sm'
-                : 'right-4 top-3.5 text-sm'
-            )}
-          >
-            DD/MM/YYYY
-          </div>
-        )}
       </div>
     );
   }

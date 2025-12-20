@@ -43,22 +43,22 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
     defaultValues: {
       profilePicture: null,
       name: '',
-      email: '',
+      email: undefined,
       phone: '',
-      dob: '',
+      dob: undefined,
       height: '',
       weight: '',
       address: '',
       gender: '',
       bloodGroup: '',
-      idType: '',
-      id: '',
+      idType: undefined,
+      id: undefined,
       idDocument: undefined as unknown as File,
-      purpose: '',
-      medicalHistory: '',
-      emergencyContactName: '',
-      emergencyContactPhone: '',
-      emergencyContactRelation: '',
+      purpose: undefined,
+      medicalHistory: undefined,
+      emergencyContactName: undefined,
+      emergencyContactPhone: undefined,
+      emergencyContactRelation: undefined,
     },
   });
 
@@ -140,7 +140,6 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   control={form.control}
                   name="email"
                   label="Email"
-                  mandetory
                 />
                 <KFormField
                   fieldType={KFormFieldType.PHONE_INPUT}
@@ -164,7 +163,8 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       fieldType={KFormFieldType.INPUT}
                       control={form.control}
                       name="height"
-                      label="Height (In Centimeters)"
+                      label="Height (CM)"
+                      mandetory
                     />
                   </div>
                   <div className="w-full sm:w-1/2 ">
@@ -172,7 +172,8 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       fieldType={KFormFieldType.INPUT}
                       control={form.control}
                       name="weight"
-                      label="Weight (In Kilograms)"
+                      label="Weight (KG)"
+                      mandetory
                     />
                   </div>
                 </div>
@@ -182,8 +183,7 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       fieldType={KFormFieldType.DATE_INPUT}
                       control={form.control}
                       name="dob"
-                      label="Date of birth"
-                      mandetory
+                      label="Date of birth (DD/MM/YYYY"
                     />
                   </div>
                   <div className="w-full sm:w-1/2 ">
@@ -236,7 +236,6 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   name="idType"
                   label="ID Type"
                   options={idTypeOptions}
-                  mandetory
                 />
                 <KFormField
                   fieldType={KFormFieldType.INPUT}
@@ -244,7 +243,6 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                   name="id"
                   label="ID Number"
                   maxLength={20}
-                  mandetory
                 />
                 <div className="flex gap-3">
                   <div className="w-1/2">
@@ -267,9 +265,8 @@ export default function MemberRegister({ gymId }: MemberRegisterProps) {
                       fieldType={KFormFieldType.FILE_UPLOAD}
                       control={form.control}
                       name="idDocument"
-                      label="ID Copy"
+                      label="ID Copy (Optional)"
                       type="document"
-                      mandetory
                     />
                   </div>
                 </div>

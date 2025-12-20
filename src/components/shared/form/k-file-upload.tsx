@@ -73,7 +73,7 @@ export function KFileUpload<T extends FieldValues>({
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="flex flex-col justify-center h-full gap-3 px-3">
+              <div className="flex flex-col justify-center overflow-auto h-full gap-3 p-3">
                 <span className="mx-auto">
                   <Image
                     alt="pdf"
@@ -83,10 +83,10 @@ export function KFileUpload<T extends FieldValues>({
                   />
                 </span>
                 <p
-                  className="text-[10px] sm:text-xs text-wrap text-gray-300 w-full text-center"
-                  title={field.value.name}
+                  className="text-[10px] sm:text-xs break-all whitespace-normal text-gray-300 w-full text-center"
+                  title={field.value?.name}
                 >
-                  {field.value.name}
+                  {field.value?.name}
                 </p>
               </div>
             )}
