@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import Footer from '@/components/shared/layout/footer';
 import { AppProviders } from '@/providers';
 
 import './globals.css';
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  viewport: null,
 };
 
 export default function RootLayout({
@@ -41,10 +43,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </head>
       <body
-        className={`${figtree.className} bg-secondary-blue-500 antialiased`}
+        className={`${figtree.className} bg-secondary-blue-500 antialiased h-dvh overflow-y-auto`}
       >
         <AppProviders>{children}</AppProviders>
+        <Footer />
       </body>
     </html>
   );

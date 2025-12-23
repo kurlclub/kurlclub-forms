@@ -71,7 +71,7 @@ export const KSelect = React.forwardRef<
         </Select>
         {label && (
           <label
-            className={`absolute text-sm duration-300 text-primary-blue-100 transform -translate-y-3.5 scale-75 z-10 origin-left cursor-pointer
+            className={`absolute text-sm duration-300 text-primary-blue-100 transform -translate-y-3.5 scale-75 z-10 origin-[0] cursor-pointer
             ${size === 'sm' ? 'top-2.5 start-3' : 'top-4 start-4'}
             peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100
             ${
@@ -92,17 +92,3 @@ export const KSelect = React.forwardRef<
   }
 );
 KSelect.displayName = 'KSelect';
-
-{
-  /* <KSelect
-  label="Select Country"
-  value={selectedCountry}
-  onValueChange={(value) => onChange({ target: { name, value } })}
-  options={[
-    { label: 'India', value: 'IN' },
-    { label: 'United States', value: 'US' },
-    { label: 'Australia', value: 'AU' },
-  ]}
-  className="border-white! rounded-lg!"
-/> */
-}

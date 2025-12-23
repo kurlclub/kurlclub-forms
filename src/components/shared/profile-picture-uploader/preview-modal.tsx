@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import KDialog from '@/components/shared/form/k-dialog';
 import { Button } from '@/components/ui/button';
 
@@ -35,12 +33,11 @@ export default function PreviewModal({
     >
       {src && (
         <div className="flex justify-center">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={src}
             alt="Profile picture"
-            width={250}
-            height={250}
-            className="rounded-full"
+            className="rounded-full w-[250px] h-[250px] object-cover"
           />
         </div>
       )}
